@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CCinputManager : MonoBehaviour
+public class player : MonoBehaviour
 {
+
     [Header("Refs")]
     [SerializeField] private CharacterController controller;
     [SerializeField] private Transform cameraTransform;
