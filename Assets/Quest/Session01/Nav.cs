@@ -1,0 +1,30 @@
+using UnityEngine;
+using UnityEngine.AI;
+
+public class Monster : MonoBehaviour
+{
+    public Transform target;
+
+    NavMeshAgent nmAgent;
+
+    private void Start()
+    {
+        nmAgent = GetComponent<NavMeshAgent>();
+    }
+
+    private void Update()
+    {
+        //타겟이 없으면 추적 안 함 = 늘 따라오도록
+        if (!target) return;
+
+        //타겟과 병아리 사이의 방향 벡터 생성
+        Vector3 to = target.position - transform.position;
+
+        // 앞에 10M 정면 40도 이내에 있을 때에만 오도록
+        if (to.sqrMagnitude <= 10f * 5f && Vector3.Angle(transform.forward, to) <= 40f)
+        {
+            nmAgent.isStopped = false;                 // 혹시 멈춰 있었으면 해제
+            nmAgent.SetDestination(target.position);   // 목적지 갱신
+        }
+    }
+}
