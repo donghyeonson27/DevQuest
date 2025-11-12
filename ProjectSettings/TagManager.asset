@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - FxTemporaire
+  - Enemy
+  - Bullet
+  - Floor
   layers:
   - Default
   - TransparentFX

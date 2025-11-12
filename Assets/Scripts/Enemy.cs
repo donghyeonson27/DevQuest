@@ -226,4 +226,7 @@ public class Enemy : MonoBehaviour
         Gizmos.color = new Color(1f, 0f, 0f, 0.5f);
         Gizmos.DrawSphere(transform.position, attackRange);
     }
+
+
+
 }
