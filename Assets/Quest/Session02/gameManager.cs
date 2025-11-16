@@ -26,7 +26,7 @@ public class gameManager : MonoBehaviour
         bullet.transform.SetPositionAndRotation(firePoint.position, firePoint.rotation);
 
         if (bullet.TryGetComponent(out Rigidbody rb))
-            rb.velocity = firePoint.forward * bulletSpeed;
+            rb.linearVelocity = firePoint.forward * bulletSpeed;
 
         StartCoroutine(DeactivateBullet(bullet));
     }
