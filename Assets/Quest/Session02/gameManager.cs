@@ -1,40 +1,46 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using System.Collections;
-
 
 public class gameManager : MonoBehaviour
 {
-    public ObjectPool bulletPool;
-    public float bulletSpeed = 10f;
+    [Header("Bullet Settings")]
+    [SerializeField] private ObjectPool bulletPool;
+    [SerializeField] private float bulletSpeed = 10f;
+    [SerializeField] private float bulletLifeTime = 2f;
 
-    [SerializeField]
-    private Transform firePoint;
+    [Header("Fire Settings")]
+    [SerializeField] private Transform firePoint;
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        // 테스트용: 마우스 왼쪽 버튼 클릭 시 발사
+        if (Input.GetMouseButtonDown(0))
         {
             Shoot();
         }
     }
 
-    void Shoot()
-    {       
+    private void Shoot()
+    {
+        // 필수 레퍼런스 체크
+        if (bulletPool == null || firePoint == null) return;
+
         GameObject bullet = bulletPool.GetFromPool();
 
         bullet.transform.SetPositionAndRotation(firePoint.position, firePoint.rotation);
 
         if (bullet.TryGetComponent(out Rigidbody rb))
+        {
+            
             rb.linearVelocity = firePoint.forward * bulletSpeed;
+        }
 
         StartCoroutine(DeactivateBullet(bullet));
     }
 
-
-    IEnumerator DeactivateBullet(GameObject bullet)
+    private IEnumerator DeactivateBullet(GameObject bullet)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(bulletLifeTime);
         bulletPool.ReturnToPool(bullet);
     }
 }
